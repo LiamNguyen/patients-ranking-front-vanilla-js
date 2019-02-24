@@ -1,4 +1,4 @@
-var socket = io('http://localhost:5000');
+var socket = io(window.API_URL);
 var state = {
 	query: {
 		firstRoom: getUrlParameter('firstRoom'),
