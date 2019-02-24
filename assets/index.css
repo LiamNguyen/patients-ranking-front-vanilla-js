@@ -1,0 +1,393 @@
+@media (max-width: 1680px) and (max-height: 917px) {
+	.patients-name-and-rank .room-name {
+		font-size: 30px;
+	}
+
+	.patients-name-and-rank .welcoming {
+		font-size: 25px;
+	}
+
+	.patients-name-and-rank .patient-name {
+		font-size: 35px;
+	}
+
+	.patients-name-and-rank .number {
+		font-size: 40px;
+	}
+
+	.patients-name-and-rank .patient-number {
+		font-size: 60px;
+	}
+
+	.panel-container .waiting-list {
+		font-size: 30px;
+	}
+
+	.ranking-screen .footer {
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 1400px) {
+	.app .signin-screen {
+		width: 40%;
+	}
+
+	.signin-screen .image-container {
+		display: none;
+	}
+}
+
+@media (max-width: 900px) {
+	.app .signin-screen {
+		width: 100%;
+		margin-top: 50px;
+	}
+
+	.signin-screen .signin-panel .logo {
+		margin-top: 20px;
+	}
+}
+
+@media (max-width: 400px) {
+	.signin-screen .signin-panel .logo {
+		width: 250px;
+	}
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#root {
+	height: 100%;
+	overflow: auto;
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover !important;
+	-o-background-size: cover !important;
+	background-size: cover !important;
+}
+
+.app {
+	height: 100%;
+	background-color: white;
+	padding: 0;
+}
+
+.screen-container {
+	height: 100%;
+	width: 100%;
+}
+
+.screen-content {
+	overflow-y: auto;
+}
+
+/* Overriding alert box style from react-s-alert  */
+.s-alert-wrapper .s-alert-box {
+	position: absolute !important;
+	z-index: 1500;
+}
+
+/*Overriding react-tabs-redux*/
+.app .tab-link {
+	display: inline-block;
+	font-size: 18px;
+	user-select: none;
+	padding: 10px;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+	transition: 1s ease;
+}
+
+.tab-link.tab-link-active {
+	color: #b777ae;
+}
+
+.tab-panel {
+	margin-top: 20px;
+}
+
+
+.ranking-screen {
+	background-color: #1B4889;
+	height: 100%;
+}
+
+hr {
+	width: 950px;
+	height: 1px;
+	color: lightgray;
+	background-color: lightgray;
+	border: none;
+}
+
+.header-title {
+	position: relative;
+	text-align: center;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+}
+
+.nancy-logo {
+	position: absolute;
+	left: 0;
+	width: 230px;
+}
+
+.htgsoft-logo {
+	position: absolute;
+	right: 0;
+	width: 230px;
+}
+
+.header-container {
+	padding: 10px 20px 0 20px;
+}
+
+.header-container span {
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.current-time {
+	text-align: center;
+	color: #ff1e82;
+	font-weight: bold;
+	font-size: 40px;
+}
+
+.panel-container {
+	width: 100%;
+	height: 77%;
+}
+
+.patients-name-and-rank {
+	position: relative;
+	padding-top: 20px;
+	text-align: center;
+	height: 60%;
+}
+
+.patients-name-and-rank .section {
+	width: 49%;
+}
+
+.patients-name-and-rank .section .sub-section {
+	display: inline-block;
+	height: 100%;
+}
+
+.patients-name-and-rank .section.left {
+	float: left;
+}
+
+.patients-name-and-rank .section.left.one-room-layout {
+	float: unset;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.patients-name-and-rank .section.right {
+	float: right;
+}
+
+.patients-name-and-rank .section .sub-section.left {
+	width: 69%;
+	border-right: solid 1px white;
+}
+
+.patients-name-and-rank .section .sub-section.right {
+	width: 29%;
+}
+
+.panel-sub-container {
+	display: inline-block;
+	width: 49%;
+	height: 100%;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.right-panel-sub-container {
+	border-left: solid 1px white;
+}
+
+.panel-sub-container.one-room-layout {
+	margin: 0;
+	flex: 0.6;
+}
+
+.panel-sub-container hr {
+	width: 430px;
+	height: 1px;
+	color: lightgray;
+	background-color: lightgray;
+	border: none;
+}
+
+.number {
+	color: white;
+	font-size: 50px;
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.patient-number {
+	margin: 40px 0 0 0;
+	color: #faff47;
+	font-size: 70px;
+	font-weight: bold;
+}
+
+.patient-number.change-room {
+	margin: 0;
+}
+
+.room-name {
+	font-size: 40px;
+	color: #ff1e82;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.welcoming {
+	font-size: 35px;
+	color: white;
+	text-align: center;
+}
+
+.patient-name {
+	font-size: 45px;
+	color: #faff47;
+	font-weight: bold;
+	text-align: center;
+}
+
+.waiting-list {
+	padding: 0 30px 0 30px;
+	font-size: 40px;
+	color: white;
+	height: 25%;
+}
+
+.waiting-list .section {
+	width: 50%;
+	height: 100%;
+	display: inline-block;
+}
+
+.waiting-list .section .sub-section {
+	display: inline-block;
+}
+
+.waiting-list .section.left .sub-section {
+	float: right;
+	margin-right: 100px
+}
+
+.waiting-list .section.left.align-center {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.waiting-list .section.left.align-center .sub-section {
+	text-align: center;
+	float: unset;
+	margin: unset;
+	display: block;
+}
+
+.waiting-list .section.right .sub-section {
+	float: left;
+	margin-left: 100px;
+}
+
+.footer {
+	white-space: nowrap;
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+	position: fixed;
+	width: 100%;
+	bottom: 30px;
+	overflow: hidden;
+}
+
+.footer .marquee div {
+	display: inline;
+}
+
+.footer .room-name-in-footer {
+	color: #ff1e82;
+}
+
+.footer .patient-number-in-footer {
+	color: #faff47;
+}
+
+.footer .patient-name-in-footer {
+	color: #faff47;
+}
+
+.footer .footer-item {
+	display: inline;
+}
+
+.vertical-separator {
+	display: inline-block;
+	background-color: white;
+	width: 1px;
+	height: 100%;
+}
+
+.vertical-separator.half-height {
+	height: 50%;
+}
+
+.hide {
+	display: none;
+}
+
+.marquee {
+	/* Starting position */
+	-moz-transform:translateX(100%);
+	-webkit-transform:translateX(100%);
+	transform:translateX(100%);
+	/* Apply animation to this element */
+	-moz-animation: scroll-left 40s linear infinite;
+	-webkit-animation: scroll-left 40s linear infinite;
+	animation: scroll-left 40s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes scroll-left {
+	0%   { -moz-transform: translateX(100%); }
+	100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes scroll-left {
+	0%   { -webkit-transform: translateX(100%); }
+	100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes scroll-left {
+	0% {
+		-moz-transform: translateX(100%); /* Browser bug fix */
+		-webkit-transform: translateX(100%); /* Browser bug fix */
+		transform: translateX(100%);
+	}
+	100% {
+		-moz-transform: translateX(-100%); /* Browser bug fix */
+		-webkit-transform: translateX(-100%); /* Browser bug fix */
+		transform: translateX(-100%);
+	}
+}

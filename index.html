@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<title>Patients ranking</title>
+	<link href="assets/index.css" rel="stylesheet">
+</head>
+<body>
+	<div id="root">
+		<div class="ranking-screen">
+			<!--HEADER-->
+			<div class="header-container">
+				<div class="header-title">
+					<img class="nancy-logo" src="assets/images/logo_nancy.png" alt="" />
+					<span>PHÒNG KHÁM NANCY</span>
+					<img class="htgsoft-logo" src="assets/images/logo_HTGSoft.png" alt="" />
+				</div>
+				<div class="current-time">00:00:00</div>
+			</div>
+			<!--END HEADER-->
+			<hr />
+			<!--BODY-->
+			<div class="panel-container">
+				<div class="patients-name-and-rank">
+					<!--PATIENTS NAME AND RANK FIRST ROOM-->
+					<div id="patients-name-and-rank-section-left" class="section left">
+						<div class="sub-section left">
+							<p id="first-room-name" class="room-name">...</p>
+							<div>
+								<svg id="first-change-room-icon" class="hide" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#ff1e82">
+									<path d="M12 21.312l-7.121-7.121c-1.17-1.17-1.17-3.073 0-4.242 1.094-1.094 2.978-1.138 4.121-.115v-4.834c0-1.654 1.346-3 3-3s3 1.346 3 3v4.834c1.143-1.023 3.027-.979 4.121.115 1.17 1.169 1.17 3.072 0 4.242l-7.121 7.121zm-5-10.242c-.268 0-.518.104-.707.293-.391.39-.391 1.023 0 1.414l5.707 5.707 5.707-5.707c.391-.391.391-1.024 0-1.414-.379-.379-1.035-.379-1.414 0l-3.293 3.293v-9.656c0-.551-.448-1-1-1s-1 .449-1 1v9.656l-3.293-3.293c-.189-.189-.439-.293-.707-.293z">
+									</path>
+								</svg>
+								<p id="first-new-room-name" class="room-name change-room hide">...</p>
+							</div>
+							<p class="welcoming">MỜI KHÁCH HÀNG</p>
+							<p id="first-patient-name" class="patient-name">...</p>
+						</div>
+						<div class="sub-section right">
+							<p class="number">SỐ</p>
+							<p id="first-patient-number" class="patient-number">...</p>
+							<div>
+								<svg id="first-change-rank-icon" class="hide" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#faff47">
+									<path d="M12 21.312l-7.121-7.121c-1.17-1.17-1.17-3.073 0-4.242 1.094-1.094 2.978-1.138 4.121-.115v-4.834c0-1.654 1.346-3 3-3s3 1.346 3 3v4.834c1.143-1.023 3.027-.979 4.121.115 1.17 1.169 1.17 3.072 0 4.242l-7.121 7.121zm-5-10.242c-.268 0-.518.104-.707.293-.391.39-.391 1.023 0 1.414l5.707 5.707 5.707-5.707c.391-.391.391-1.024 0-1.414-.379-.379-1.035-.379-1.414 0l-3.293 3.293v-9.656c0-.551-.448-1-1-1s-1 .449-1 1v9.656l-3.293-3.293c-.189-.189-.439-.293-.707-.293z">
+									</path>
+								</svg>
+								<p id="first-new-rank" class="patient-number change-room hide">...</p>
+							</div>
+						</div>
+					</div>
+					<!--END PATIENTS NAME AND RANK FIRST ROOM-->
+					<div id="patients-name-and-rank-sections-separator" class="vertical-separator"></div>
+					<!--PATIENTS NAME AND RANK SECOND ROOM-->
+					<div id="patients-name-and-rank-section-right" class="section right">
+						<div class="sub-section left">
+							<p id="second-room-name" class="room-name">...</p>
+							<div>
+								<svg id="second-change-room-icon" class="hide" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#ff1e82">
+									<path d="M12 21.312l-7.121-7.121c-1.17-1.17-1.17-3.073 0-4.242 1.094-1.094 2.978-1.138 4.121-.115v-4.834c0-1.654 1.346-3 3-3s3 1.346 3 3v4.834c1.143-1.023 3.027-.979 4.121.115 1.17 1.169 1.17 3.072 0 4.242l-7.121 7.121zm-5-10.242c-.268 0-.518.104-.707.293-.391.39-.391 1.023 0 1.414l5.707 5.707 5.707-5.707c.391-.391.391-1.024 0-1.414-.379-.379-1.035-.379-1.414 0l-3.293 3.293v-9.656c0-.551-.448-1-1-1s-1 .449-1 1v9.656l-3.293-3.293c-.189-.189-.439-.293-.707-.293z">
+									</path>
+								</svg>
+								<p id="second-new-room-name" class="room-name hide">...</p>
+							</div>
+							<p class="welcoming">MỜI KHÁCH HÀNG</p>
+							<p id="second-patient-name" class="patient-name">...</p>
+						</div>
+						<div class="sub-section right">
+							<p class="number">SỐ</p>
+							<p id="second-patient-number" class="patient-number">...</p>
+							<div>
+								<svg id="second-change-rank-icon" class="hide" version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#faff47">
+									<path d="M12 21.312l-7.121-7.121c-1.17-1.17-1.17-3.073 0-4.242 1.094-1.094 2.978-1.138 4.121-.115v-4.834c0-1.654 1.346-3 3-3s3 1.346 3 3v4.834c1.143-1.023 3.027-.979 4.121.115 1.17 1.169 1.17 3.072 0 4.242l-7.121 7.121zm-5-10.242c-.268 0-.518.104-.707.293-.391.39-.391 1.023 0 1.414l5.707 5.707 5.707-5.707c.391-.391.391-1.024 0-1.414-.379-.379-1.035-.379-1.414 0l-3.293 3.293v-9.656c0-.551-.448-1-1-1s-1 .449-1 1v9.656l-3.293-3.293c-.189-.189-.439-.293-.707-.293z">
+									</path>
+								</svg>
+								<p id="second-new-rank" class="patient-number change-room hide">...</p>
+							</div>
+						</div>
+					</div>
+					<!--END PATIENTS NAME AND RANK SECOND ROOM-->
+
+					<!--{!isOneRoomLayout(secondRoomFromQuery) && (-->
+					<!--<div class="vertical-separator"></div>-->
+					<!--)}-->
+					<!--{!isOneRoomLayout(secondRoomFromQuery) && (-->
+					<!--<PatientsNameAndRank-->
+						<!--class="section right"-->
+						<!--inTreatment={secondRoom}-->
+					<!--/>-->
+					<!--)}-->
+				</div>
+				<hr />
+				<div class="waiting-list">
+					<!--<WaitingList-->
+						<!--class={`section left ${-->
+						<!--listToDisplay.length > 3 ? '' : 'align-center'-->
+						<!--}`}-->
+						<!--list={_.chunk(listToDisplay, 3)[0]}-->
+						<!--/>-->
+						<!--{listToDisplay.length > 3 && (-->
+						<!--<WaitingList-->
+							<!--class="section right"-->
+							<!--list={_.chunk(listToDisplay, 3)[1]}-->
+						<!--/>-->
+						<!--)}-->
+				</div>
+			</div>
+			<!--END BODY-->
+			<hr />
+			<!--FOOTER-->
+			<div class="footer">
+				<div class="marquee">
+		      <span>
+		        {!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)
+		          ? footerTitleMissedTurn
+		          : footerTitle}
+		      </span>
+					<!--<div class="footer-item">-->
+						<!--{missedTurnRoom.map((item, index) => (-->
+						<!--<div key={index}>-->
+							<!--&nbsp;&nbsp;-&nbsp;&nbsp;-->
+							<!--<span className="room-name-in-footer">{room.roomName}</span>-->
+							<!--&nbsp;{call}&nbsp;-->
+							<!--<span className="patient-number-in-footer">{item.rank}</span>.-->
+							<!--<span className="patient-name-in-footer">{item.patient}</span>-->
+						<!--</div>-->
+					<!--))}-->
+					<!--</div>-->
+				</div>
+			</div>
+			<!--END FOOTER-->
+		</div>
+	</div>
+	<!--[if lt IE 10]>
+	<div class="non-support-overlay">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-body text-center">
+					Your browser is out of date. Please update it.
+					<br/>
+					Supported browsers include IE 10 or later, Chrome, Firefox and Safari.
+					<hr/>
+					<a href="http://www.edenred.fi"><b>www.edenred.fi</b></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<![endif]-->
+	<noscript>
+		<br/><br/>
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-body text-center">
+						JavaScript is disabled or not supported by your browser.
+						<br/>
+						Supported browsers include IE 10 or later, Chrome, Firefox and Safari.
+						<hr/>
+						<a href="http://www.edenred.fi" target="_blank"><b>www.edenred.fi</b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</noscript>
+	<script src="lib/momentjs/moment.min.js"></script>
+	<script src="lib/lodash/lodash.min.js"></script>
+	<script src="lib/socket.io/socket.io.slim.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
