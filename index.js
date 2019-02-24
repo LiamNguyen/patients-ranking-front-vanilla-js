@@ -1,3 +1,4 @@
+var MAX_WAITING_PATIENTS = 6;
 var socket = io(window.API_URL);
 var state = {
 	query: {
@@ -24,7 +25,7 @@ socket.on('refresh-ranking-display', function (newRanking) {
 		setMissedTurnData(newRanking);
 		setInTreatmentData(newRanking);
 		setWaitingListData(newRanking);
-		updateUI(newRanking.room);
+		updateUI(room);
 	}
 	// this.storeCurrentRankingState();
 });
@@ -32,7 +33,7 @@ socket.on('refresh-ranking-display', function (newRanking) {
 if (!state.query.secondRoom) {
 	hideElement('patients-name-and-rank-section-right');
 	hideElement('patients-name-and-rank-sections-separator');
-	addClassNames('patients-name-and-rank-section-left', 'one-room-layout');
+	document.getElementById('patients-name-and-rank-section-left').classList.add('one-room-layout');
 }
 
 // HELPER METHODS
@@ -69,46 +70,54 @@ function updateUI(room) {
 		patientNumberEl.innerText = inTreatment.oldRank;
 		newRankEl.innerText = inTreatment.rank;
 	}
-}
 
-function hideElement(targetId) {
-	var element = document.getElementById(targetId);
-	var currentClasses = element.getAttribute('class');
+	// Update waiting list
+	remoteAllChildNodes('left-waiting-list-sub-section');
+	remoteAllChildNodes('right-waiting-list-sub-section');
+	var leftWaitingListEl = document.getElementById('left-waiting-list');
+	var leftWaitingListSubSectionEl = document.getElementById('left-waiting-list-sub-section');
+	var rightWaitingListSubSectionEl = document.getElementById('right-waiting-list-sub-section');
+	var firstRoomWaitingList = state.waitingList.firstRoom;
+	var secondRoomWaitingList = state.waitingList.secondRoom;
+	var listToDisplay = _.isEmpty(state.room)
+		? []
+		: isDataForFirstRoom(state.query, state.room)
+			? getDisplayWaitingList(firstRoomWaitingList, secondRoomWaitingList)
+			: getDisplayWaitingList(secondRoomWaitingList, firstRoomWaitingList);
+	var firstSubList = _.chunk(listToDisplay, 3)[0];
+	var secondSubList = _.chunk(listToDisplay, 3)[1];
 
-	element.removeAttribute('class');
-	element.setAttribute('class', currentClasses + ' ' + 'hide');
-}
+	if (!_.isEmpty(firstSubList)) {
+		if (listToDisplay.length <= 3) {
+			leftWaitingListEl.classList.add('align-center');
+		} else {
+			leftWaitingListEl.classList.remove('align-center');
+		}
+		firstSubList.forEach(function (item) {
+			var listItemEl = document.createElement('p');
+			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);
 
-function unhideElement(targetId) {
-	var element = document.getElementById(targetId);
-	var currentClasses = element.getAttribute('class');
+			listItemEl.appendChild(listItemTextEl);
+			leftWaitingListSubSectionEl.appendChild(listItemEl);
+		});
+	}
+	if (!_.isEmpty(secondSubList)) {
+		secondSubList.forEach(function (item) {
+			var listItemEl = document.createElement('p');
+			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);
 
-	element.removeAttribute('class');
-	element.setAttribute('class', currentClasses.replace('hide', ''));
-}
-
-function addClassNames(targetId, classNames) {
-	var element = document.getElementById(targetId);
-	var currentClassNames = element.className;
-
-	element.removeAttribute('class');
-	element.setAttribute('class', currentClassNames + ' ' + classNames);
-}
-
-function getUrlParameter(name) {
-	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-	var results = regex.exec(location.search);
-	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-function removeSpaceFromString(string) {
-	var split = string.split(' ');
-	return split.join('');
+			listItemEl.appendChild(listItemTextEl);
+			rightWaitingListSubSectionEl.appendChild(listItemEl);
+		});
+	}
 }
 
 function isDataForFirstRoom(query, room) {
 	return query.firstRoom === removeSpaceFromString(room);
+}
+
+function isOneRoomLayout(secondRoomFromQuery) {
+	return typeof secondRoomFromQuery === 'undefined';
 }
 
 function setMissedTurnData(newRanking) {
@@ -150,4 +159,31 @@ function setWaitingListData(newRanking) {
 		storingWaitingList['secondRoom'] = sortedNewWaitingList;
 	}
 	state['waitingList'] = storingWaitingList;
+}
+
+function getDisplayWaitingList(currentRoom, theOtherRoom) {
+	if (isOneRoomLayout(state.query.secondRoom)) return currentRoom;
+	if (_.isEmpty(currentRoom)) return theOtherRoom;
+
+	var currentRoomToDisplay;
+
+	if (theOtherRoom.length > 3) {
+		currentRoomToDisplay = _.chunk(currentRoom, 3)[0];
+		var theOtherRoomToDisplay = _.chunk(
+			theOtherRoom,
+			MAX_WAITING_PATIENTS - currentRoomToDisplay.length
+		)[0];
+
+		return _.sortBy(
+			_.concat(currentRoomToDisplay, theOtherRoomToDisplay),
+			'rank'
+		);
+	} else {
+		currentRoomToDisplay = _.chunk(
+			currentRoom,
+			MAX_WAITING_PATIENTS - theOtherRoom.length
+		)[0];
+
+		return _.sortBy(_.concat(currentRoomToDisplay, theOtherRoom), 'rank');
+	}
 }

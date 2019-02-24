@@ -80,56 +80,40 @@
 						</div>
 					</div>
 					<!--END PATIENTS NAME AND RANK SECOND ROOM-->
-
-					<!--{!isOneRoomLayout(secondRoomFromQuery) && (-->
-					<!--<div class="vertical-separator"></div>-->
-					<!--)}-->
-					<!--{!isOneRoomLayout(secondRoomFromQuery) && (-->
-					<!--<PatientsNameAndRank-->
-						<!--class="section right"-->
-						<!--inTreatment={secondRoom}-->
-					<!--/>-->
-					<!--)}-->
 				</div>
 				<hr />
 				<div class="waiting-list">
-					<!--<WaitingList-->
-						<!--class={`section left ${-->
-						<!--listToDisplay.length > 3 ? '' : 'align-center'-->
-						<!--}`}-->
-						<!--list={_.chunk(listToDisplay, 3)[0]}-->
-						<!--/>-->
-						<!--{listToDisplay.length > 3 && (-->
-						<!--<WaitingList-->
-							<!--class="section right"-->
-							<!--list={_.chunk(listToDisplay, 3)[1]}-->
-						<!--/>-->
-						<!--)}-->
+					<div id="left-waiting-list" class="section left">
+						<div id="left-waiting-list-sub-section" class="sub-section"></div>
+					</div>
+					<div id="right-waiting-list" class="section right">
+						<div id="right-waiting-list-sub-section" class="sub-section"></div>
+					</div>
 				</div>
 			</div>
 			<!--END BODY-->
 			<hr />
 			<!--FOOTER-->
-			<div class="footer">
-				<div class="marquee">
-		      <span>
-		        {!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)
-		          ? footerTitleMissedTurn
-		          : footerTitle}
-		      </span>
-					<!--<div class="footer-item">-->
-						<!--{missedTurnRoom.map((item, index) => (-->
-						<!--<div key={index}>-->
-							<!--&nbsp;&nbsp;-&nbsp;&nbsp;-->
-							<!--<span className="room-name-in-footer">{room.roomName}</span>-->
-							<!--&nbsp;{call}&nbsp;-->
-							<!--<span className="patient-number-in-footer">{item.rank}</span>.-->
-							<!--<span className="patient-name-in-footer">{item.patient}</span>-->
-						<!--</div>-->
-					<!--))}-->
-					<!--</div>-->
-				</div>
-			</div>
+			<!--<div class="footer">-->
+				<!--<div class="marquee">-->
+		      <!--<span>-->
+		        <!--{!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)-->
+		          <!--? footerTitleMissedTurn-->
+		          <!--: footerTitle}-->
+		      <!--</span>-->
+					<!--&lt;!&ndash;<div class="footer-item">&ndash;&gt;-->
+						<!--&lt;!&ndash;{missedTurnRoom.map((item, index) => (&ndash;&gt;-->
+						<!--&lt;!&ndash;<div key={index}>&ndash;&gt;-->
+							<!--&lt;!&ndash;&nbsp;&nbsp;-&nbsp;&nbsp;&ndash;&gt;-->
+							<!--&lt;!&ndash;<span className="room-name-in-footer">{room.roomName}</span>&ndash;&gt;-->
+							<!--&lt;!&ndash;&nbsp;{call}&nbsp;&ndash;&gt;-->
+							<!--&lt;!&ndash;<span className="patient-number-in-footer">{item.rank}</span>.&ndash;&gt;-->
+							<!--&lt;!&ndash;<span className="patient-name-in-footer">{item.patient}</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+					<!--&lt;!&ndash;))}&ndash;&gt;-->
+					<!--&lt;!&ndash;</div>&ndash;&gt;-->
+				<!--</div>-->
+			<!--</div>-->
 			<!--END FOOTER-->
 		</div>
 	</div>
@@ -165,6 +149,7 @@
 		</div>
 	</noscript>
 	<script type="text/javascript" src="env.js"></script>
+	<script type="text/javascript" src="helpers.js"></script>
 	<script type="text/javascript" src="lib/momentjs/moment.min.js"></script>
 	<script type="text/javascript" src="lib/lodash/lodash.min.js"></script>
 	<script type="text/javascript" src="lib/socket.io/socket.io.slim.js"></script>

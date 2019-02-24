@@ -282,7 +282,7 @@ hr {
 }
 
 .waiting-list .section {
-	width: 50%;
+	width: 49%;
 	height: 100%;
 	display: inline-block;
 }
@@ -357,7 +357,7 @@ hr {
 }
 
 .hide {
-	display: none;
+	display: none !important;
 }
 
 .marquee {
