@@ -94,26 +94,13 @@
 			<!--END BODY-->
 			<hr />
 			<!--FOOTER-->
-			<!--<div class="footer">-->
-				<!--<div class="marquee">-->
-		      <!--<span>-->
-		        <!--{!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)-->
-		          <!--? footerTitleMissedTurn-->
-		          <!--: footerTitle}-->
-		      <!--</span>-->
-					<!--&lt;!&ndash;<div class="footer-item">&ndash;&gt;-->
-						<!--&lt;!&ndash;{missedTurnRoom.map((item, index) => (&ndash;&gt;-->
-						<!--&lt;!&ndash;<div key={index}>&ndash;&gt;-->
-							<!--&lt;!&ndash;&nbsp;&nbsp;-&nbsp;&nbsp;&ndash;&gt;-->
-							<!--&lt;!&ndash;<span className="room-name-in-footer">{room.roomName}</span>&ndash;&gt;-->
-							<!--&lt;!&ndash;&nbsp;{call}&nbsp;&ndash;&gt;-->
-							<!--&lt;!&ndash;<span className="patient-number-in-footer">{item.rank}</span>.&ndash;&gt;-->
-							<!--&lt;!&ndash;<span className="patient-name-in-footer">{item.patient}</span>&ndash;&gt;-->
-						<!--&lt;!&ndash;</div>&ndash;&gt;-->
-					<!--&lt;!&ndash;))}&ndash;&gt;-->
-					<!--&lt;!&ndash;</div>&ndash;&gt;-->
-				<!--</div>-->
-			<!--</div>-->
+			<div class="footer">
+				<div class="marquee">
+		      <span id="footer-title">CHÀO MỪNG ĐẾN VỚI PHÒNG KHÁM</span>
+					<div id="first-missed-turn" class="footer-item"></div>
+					<div id="second-missed-turn" class="footer-item"></div>
+				</div>
+			</div>
 			<!--END FOOTER-->
 		</div>
 	</div>

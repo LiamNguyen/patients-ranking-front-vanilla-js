@@ -27,7 +27,7 @@ function getUrlParameter(name) {
 	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-function remoteAllChildNodes(parentId) {
+function removeAllChildNodes(parentId) {
 	var parentNode = document.getElementById(parentId);
 
 	if (!parentNode) return;
