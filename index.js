@@ -1,13 +1,13 @@
 var MAX_WAITING_PATIENTS = 6;
 var footerTitleMissedTurn = 'KHÁCH HÀNG GỌI NHỠ';
 var call = 'gọi';
-var socket = io(window.API_URL);
 var state = {
 	query: {
-		firstRoom: getUrlParameter('firstRoom'),
-		secondRoom: getUrlParameter('secondRoom')
+		firstRoom: getUrlParameter('dept_id1'),
+		secondRoom: getUrlParameter('dept_id2')
 	},
 	room: '',
+	departmentId: '',
 	inTreatment: {},
 	missedTurn: { firstRoom: [], secondRoom: [] },
 	waitingList: { firstRoom: [], secondRoom: [] }
@@ -17,20 +17,24 @@ setInterval(function () {
 	document.getElementsByClassName('current-time')[0].innerHTML = moment().format('HH:mm:ss');
 }, 1000);
 
-socket.on('refresh-ranking-display', function (newRanking) {
-	var room = newRanking.room;
-	var spaceRemovedRoom = removeSpaceFromString(room);
+setInterval(function () {
+	httpGet('api/integration/rank', function (response) {
+		response.forEach(function (newRanking) {
+			var room = newRanking.room;
+			var departmentId = newRanking.departmentId;
 
-	if ([state.query.firstRoom, state.query.secondRoom].includes(spaceRemovedRoom)) {
-		state['room'] = spaceRemovedRoom;
+			if ([state.query.firstRoom, state.query.secondRoom].includes(departmentId)) {
+				state['room'] = removeSpaceFromString(room);
+				state['departmentId'] = departmentId;
 
-		setMissedTurnData(newRanking);
-		setInTreatmentData(newRanking);
-		setWaitingListData(newRanking);
-		updateUI(room);
-	}
-	// this.storeCurrentRankingState();
-});
+				setMissedTurnData(newRanking);
+				setInTreatmentData(newRanking);
+				setWaitingListData(newRanking);
+				updateUI(room, departmentId);
+			}
+		});
+	});
+}, 5000);
 
 if (!state.query.secondRoom) {
 	hideElement('patients-name-and-rank-section-right');
@@ -40,11 +44,11 @@ if (!state.query.secondRoom) {
 
 // HELPER METHODS
 
-function updateUI(room) {
+function updateUI(room, departmentId) {
 	var idPrefix;
 	var inTreatmentKey;
 
-	if (isDataForFirstRoom(state.query, room)) {
+	if (isDataForFirstRoom(state.query, departmentId)) {
 		idPrefix = 'first-';
 		inTreatmentKey = 'firstRoom';
 	} else {
@@ -92,7 +96,7 @@ function updateWaitingList() {
 	var secondRoomWaitingList = state.waitingList.secondRoom;
 	var listToDisplay = _.isEmpty(state.room)
 		? []
-		: isDataForFirstRoom(state.query, state.room)
+		: isDataForFirstRoom(state.query, state.departmentId)
 			? getDisplayWaitingList(firstRoomWaitingList, secondRoomWaitingList)
 			: getDisplayWaitingList(secondRoomWaitingList, firstRoomWaitingList);
 	var firstSubList = _.chunk(listToDisplay, 3)[0];
@@ -165,8 +169,8 @@ function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room) {
 	}
 }
 
-function isDataForFirstRoom(query, room) {
-	return query.firstRoom === removeSpaceFromString(room);
+function isDataForFirstRoom(query, departmentId) {
+	return query.firstRoom === departmentId;
 }
 
 function isOneRoomLayout(secondRoomFromQuery) {
@@ -174,11 +178,10 @@ function isOneRoomLayout(secondRoomFromQuery) {
 }
 
 function setMissedTurnData(newRanking) {
-	var room = newRanking.room;
 	var newMissedTurn = newRanking.missedTurn;
 	var storingMissedTurn = Object.assign({}, state.missedTurn);
 
-	if (isDataForFirstRoom(state.query, room)) {
+	if (isDataForFirstRoom(state.query, newRanking.departmentId)) {
 		storingMissedTurn['firstRoom'] = newMissedTurn || [];
 	} else {
 		storingMissedTurn['secondRoom'] = newMissedTurn || [];
@@ -192,7 +195,7 @@ function setInTreatmentData(newRanking) {
 	var storingInTreatment = Object.assign({}, state.inTreatment);
 
 	newInTreatment['roomName'] = room;
-	if (isDataForFirstRoom(state.query, room)) {
+	if (isDataForFirstRoom(state.query, newRanking.departmentId)) {
 		storingInTreatment['firstRoom'] = newInTreatment;
 	} else {
 		storingInTreatment['secondRoom'] = newInTreatment;
@@ -201,12 +204,11 @@ function setInTreatmentData(newRanking) {
 }
 
 function setWaitingListData(newRanking) {
-	var room = newRanking.room;
 	var newWaitingList = newRanking.waitingList;
 	var sortedNewWaitingList = _.sortBy(newWaitingList, 'rank');
 	var storingWaitingList = Object.assign({}, state.waitingList);
 
-	if (isDataForFirstRoom(state.query, room)) {
+	if (isDataForFirstRoom(state.query, newRanking.departmentId)) {
 		storingWaitingList['firstRoom'] = sortedNewWaitingList;
 	} else {
 		storingWaitingList['secondRoom'] = sortedNewWaitingList;

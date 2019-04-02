@@ -4,7 +4,6 @@ function removeSpaceFromString(string) {
 }
 
 function hideElement(targetId) {
-	console.log('test');
 	var element = document.getElementById(targetId);
 	var currentClasses = element.getAttribute('class');
 
