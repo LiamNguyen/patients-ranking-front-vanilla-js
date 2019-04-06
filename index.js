@@ -1,6 +1,8 @@
 var MAX_WAITING_PATIENTS = 6;
 var footerTitleMissedTurn = 'KHÁCH HÀNG GỌI NHỠ';
-var call = 'gọi';
+var call = 'gọi số';
+var fetchRankDataIntervalInSeconds = 5000;
+var fetchMissedTurnIntervalInSeconds = 30000;
 var state = {
 	query: {
 		firstRoom: getUrlParameter('dept_id1'),
@@ -17,8 +19,27 @@ setInterval(function () {
 	document.getElementsByClassName('current-time')[0].innerHTML = moment().format('HH:mm:ss');
 }, 1000);
 
+fetchRankData();
+fetchMissedTurn();
+
 setInterval(function () {
-	httpGet('api/integration/rank', function (response) {
+	fetchRankData();
+}, fetchRankDataIntervalInSeconds);
+
+setInterval(function () {
+	fetchMissedTurn();
+}, fetchMissedTurnIntervalInSeconds);
+
+if (!state.query.secondRoom) {
+	hideElement('patients-name-and-rank-section-right');
+	hideElement('patients-name-and-rank-sections-separator');
+	document.getElementById('patients-name-and-rank-section-left').classList.add('one-room-layout');
+}
+
+// HELPER METHODS
+
+function fetchRankData() {
+	httpAuthorizedGet(getRankDataUrl + buildQueryParams(), function (response) {
 		response.forEach(function (newRanking) {
 			var room = newRanking.room;
 			var departmentId = newRanking.departmentId;
@@ -34,15 +55,35 @@ setInterval(function () {
 			}
 		});
 	});
-}, 5000);
-
-if (!state.query.secondRoom) {
-	hideElement('patients-name-and-rank-section-right');
-	hideElement('patients-name-and-rank-sections-separator');
-	document.getElementById('patients-name-and-rank-section-left').classList.add('one-room-layout');
 }
 
-// HELPER METHODS
+function fetchMissedTurn() {
+	httpAuthorizedGet(getMissedTurnUrl + buildQueryParams(), function (response) {
+		response.forEach(function (newRanking) {
+			var room = newRanking.room;
+			var departmentId = newRanking.departmentId;
+
+			if ([state.query.firstRoom, state.query.secondRoom].includes(departmentId)) {
+				state['room'] = removeSpaceFromString(room);
+				state['departmentId'] = departmentId;
+
+				setMissedTurnData(newRanking);
+				updateMissedTurnList();
+			}
+		});
+	});
+}
+
+function buildQueryParams() {
+	var firstDepartmentId = state.query.firstRoom;
+	var secondDepartmentId = state.query.secondRoom;
+
+	if (isOneRoomLayout(secondDepartmentId)) {
+		return '?dept_id1=' + firstDepartmentId;
+	} else {
+		return '?dept_id1=' + firstDepartmentId + '&dept_id2=' + secondDepartmentId;
+	}
+}
 
 function updateUI(room, departmentId) {
 	var idPrefix;
@@ -58,7 +99,6 @@ function updateUI(room, departmentId) {
 
 	updateInTreatment(room, idPrefix, inTreatmentKey);
 	updateWaitingList();
-	updateMissedTurnList();
 }
 
 function updateInTreatment(room, idPrefix, inTreatmentKey) {
@@ -151,7 +191,7 @@ function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room) {
 		missedTurnList.forEach(function (item) {
 			var roomNameSpan = document.createElement('span');
 			var patientNumberSpan = document.createElement('span');
-			var patientNameSpan = document.createElement('span');
+			// var patientNameSpan = document.createElement('span');
 
 			missedTurnedEl.appendChild(document.createTextNode('  -  '));
 			roomNameSpan.classList.add('room-name-in-footer');
@@ -161,10 +201,10 @@ function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room) {
 			patientNumberSpan.classList.add('patient-number-in-footer');
 			patientNumberSpan.innerText = item.rank;
 			missedTurnedEl.appendChild(patientNumberSpan);
-			missedTurnedEl.appendChild(document.createTextNode('. '));
-			patientNameSpan.classList.add('patient-name-in-footer');
-			patientNameSpan.innerText = item.patient;
-			missedTurnedEl.appendChild(patientNameSpan);
+			// missedTurnedEl.appendChild(document.createTextNode('. '));
+			// patientNameSpan.classList.add('patient-name-in-footer');
+			// patientNameSpan.innerText = item.patient;
+			// missedTurnedEl.appendChild(patientNameSpan);
 		});
 	}
 }
