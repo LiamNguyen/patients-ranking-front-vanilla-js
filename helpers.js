@@ -16,7 +16,13 @@ function unhideElement(targetId) {
 	var currentClasses = element.getAttribute('class');
 
 	element.removeAttribute('class');
-	element.setAttribute('class', currentClasses.replace('hide', ''));
+	element.setAttribute('class', currentClasses.replace(' hide', '').replace('hide', ''));
+}
+
+function isElementHidden(targetId) {
+	var element = document.getElementById(targetId);
+
+	return element.getAttribute('class').includes('hide');
 }
 
 function getUrlParameter(name) {

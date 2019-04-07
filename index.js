@@ -96,12 +96,12 @@ function updateUI(room, departmentId) {
 		idPrefix = 'second-';
 		inTreatmentKey = 'secondRoom';
 	}
-
-	updateInTreatment(room, idPrefix, inTreatmentKey);
+	
+	updateInTreatment(idPrefix, inTreatmentKey);
 	updateWaitingList();
 }
 
-function updateInTreatment(room, idPrefix, inTreatmentKey) {
+function updateInTreatment(idPrefix, inTreatmentKey) {
 	var inTreatment = state.inTreatment[inTreatmentKey];
 	var roomNameEl = document.getElementById(idPrefix + 'room-name');
 	var newRoomNameEl = document.getElementById(idPrefix + 'new-room-name');
@@ -113,7 +113,7 @@ function updateInTreatment(room, idPrefix, inTreatmentKey) {
 	patientNameEl.innerText = inTreatment.patient;
 	patientNumberEl.innerText = inTreatment.rank;
 
-	if (inTreatment.oldRoom != "") {
+	if (inTreatment.oldRoom !== '' && inTreatment.oldRank !== '') {
 		unhideElement(idPrefix + 'change-room-icon');
 		unhideElement(idPrefix + 'new-room-name');
 		unhideElement(idPrefix + 'change-rank-icon');
@@ -123,10 +123,14 @@ function updateInTreatment(room, idPrefix, inTreatmentKey) {
 		patientNumberEl.innerText = inTreatment.oldRank;
 		newRankEl.innerText = inTreatment.rank;
 	} else {
-		hideElement(idPrefix + 'change-room-icon');
-		hideElement(idPrefix + 'new-room-name');
-		hideElement(idPrefix + 'change-rank-icon');
-		hideElement(idPrefix + 'new-rank');
+		if (!isElementHidden(idPrefix + 'change-room-icon'))
+			hideElement(idPrefix + 'change-room-icon');
+		if (!isElementHidden(idPrefix + 'new-room-name'))
+			hideElement(idPrefix + 'new-room-name');
+		if (!isElementHidden(idPrefix + 'change-rank-icon'))
+			hideElement(idPrefix + 'change-rank-icon');
+		if (!isElementHidden(idPrefix + 'new-rank'))
+			hideElement(idPrefix + 'new-rank');
 	}
 }
 
