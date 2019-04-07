@@ -1,7 +1,7 @@
 var MAX_WAITING_PATIENTS = 6;
 var footerTitleMissedTurn = 'KHÁCH HÀNG GỌI NHỠ';
 var call = 'gọi số';
-var fetchRankDataIntervalInSeconds = 5000;
+var fetchRankDataIntervalInSeconds = 10000;
 var fetchMissedTurnIntervalInSeconds = 30000;
 var state = {
 	query: {
@@ -113,7 +113,7 @@ function updateInTreatment(room, idPrefix, inTreatmentKey) {
 	patientNameEl.innerText = inTreatment.patient;
 	patientNumberEl.innerText = inTreatment.rank;
 
-	if (inTreatment.oldRoom) {
+	if (inTreatment.oldRoom != "") {
 		unhideElement(idPrefix + 'change-room-icon');
 		unhideElement(idPrefix + 'new-room-name');
 		unhideElement(idPrefix + 'change-rank-icon');
@@ -122,6 +122,11 @@ function updateInTreatment(room, idPrefix, inTreatmentKey) {
 		roomNameEl.innerText = inTreatment.oldRoom;
 		patientNumberEl.innerText = inTreatment.oldRank;
 		newRankEl.innerText = inTreatment.rank;
+	} else {
+		hideElement(idPrefix + 'change-room-icon');
+		hideElement(idPrefix + 'new-room-name');
+		hideElement(idPrefix + 'change-rank-icon');
+		hideElement(idPrefix + 'new-rank');
 	}
 }
 
