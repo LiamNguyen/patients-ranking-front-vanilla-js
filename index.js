@@ -39,39 +39,58 @@ if (!state.query.secondRoom) {
 // HELPER METHODS
 
 function fetchRankData() {
-	httpAuthorizedGet(getRankDataUrl + buildQueryParams(), function (response) {
-		response.forEach(function (newRanking) {
-			var room = newRanking.room;
-			var departmentId = newRanking.departmentId;
+	var http = new XMLHttpRequest();
+	var url = window.API_URL + getRankDataUrl + buildQueryParams() + '&token=B131DCA0-69E6-425D-BEC0-8BE8094EBD14';
 
-			if ([state.query.firstRoom, state.query.secondRoom].includes(departmentId)) {
-				state['room'] = removeSpaceFromString(room);
-				state['departmentId'] = departmentId;
+	http.open('GET', url);
+	http.send();
+	http.onreadystatechange = function () {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = JSON.parse(http.responseText);
+			
+			for(var i = 0; i < response.length; i++) {
+				var newRanking = response[i];
+				var room = newRanking.room;
+				var departmentId = newRanking.departmentId;
+				
+				if (state.query.firstRoom === departmentId || state.query.secondRoom === departmentId) {
+					state['room'] = removeSpaceFromString(room);
+					state['departmentId'] = departmentId;
 
-				setMissedTurnData(newRanking);
-				setInTreatmentData(newRanking);
-				setWaitingListData(newRanking);
-				updateUI(room, departmentId);
+					setInTreatmentData(newRanking);
+					setWaitingListData(newRanking);
+					updateUI(room, departmentId);
+				}
 			}
-		});
-	});
+		}
+	};
 }
 
 function fetchMissedTurn() {
-	httpAuthorizedGet(getMissedTurnUrl + buildQueryParams(), function (response) {
-		response.forEach(function (newRanking) {
-			var room = newRanking.room;
-			var departmentId = newRanking.departmentId;
+	var http = new XMLHttpRequest();
+	var url = window.API_URL + getMissedTurnUrl + buildQueryParams() + '&token=B131DCA0-69E6-425D-BEC0-8BE8094EBD14';
 
-			if ([state.query.firstRoom, state.query.secondRoom].includes(departmentId)) {
-				state['room'] = removeSpaceFromString(room);
-				state['departmentId'] = departmentId;
+	http.open('GET', url);
+	http.send();
+	http.onreadystatechange = function () {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = JSON.parse(http.responseText);
+			
+			for(var i = 0; i < response.length; i++) {
+				var newRanking = response[i];
+				var room = newRanking.room;
+				var departmentId = newRanking.departmentId;
 
-				setMissedTurnData(newRanking);
-				updateMissedTurnList();
+				if ([state.query.firstRoom, state.query.secondRoom].includes(departmentId)) {
+					state['room'] = removeSpaceFromString(room);
+					state['departmentId'] = departmentId;
+
+					setMissedTurnData(newRanking);
+					updateMissedTurnList();
+				}
 			}
-		});
-	});
+		}
+	};
 }
 
 function buildQueryParams() {
@@ -113,7 +132,10 @@ function updateInTreatment(idPrefix, inTreatmentKey) {
 	patientNameEl.innerText = inTreatment.patient;
 	patientNumberEl.innerText = inTreatment.rank;
 
-	if (inTreatment.oldRoom !== '' && inTreatment.oldRank !== '') {
+	if ((inTreatment.oldRoom !== null &&
+		inTreatment.oldRank !== null &&
+		inTreatment.oldRoom !== '' &&
+		inTreatment.oldRank !== '')) {
 		unhideElement(idPrefix + 'change-room-icon');
 		unhideElement(idPrefix + 'new-room-name');
 		unhideElement(idPrefix + 'change-rank-icon');
@@ -123,14 +145,18 @@ function updateInTreatment(idPrefix, inTreatmentKey) {
 		patientNumberEl.innerText = inTreatment.oldRank;
 		newRankEl.innerText = inTreatment.rank;
 	} else {
-		if (!isElementHidden(idPrefix + 'change-room-icon'))
+		if (!isElementHidden(idPrefix + 'change-room-icon')) {
 			hideElement(idPrefix + 'change-room-icon');
-		if (!isElementHidden(idPrefix + 'new-room-name'))
+		}
+		if (!isElementHidden(idPrefix + 'new-room-name')) {
 			hideElement(idPrefix + 'new-room-name');
-		if (!isElementHidden(idPrefix + 'change-rank-icon'))
+		}
+		if (!isElementHidden(idPrefix + 'change-rank-icon')) {
 			hideElement(idPrefix + 'change-rank-icon');
-		if (!isElementHidden(idPrefix + 'new-rank'))
+		}
+		if (!isElementHidden(idPrefix + 'new-rank')) {
 			hideElement(idPrefix + 'new-rank');
+		}
 	}
 }
 
@@ -231,9 +257,17 @@ function setMissedTurnData(newRanking) {
 	var storingMissedTurn = Object.assign({}, state.missedTurn);
 
 	if (isDataForFirstRoom(state.query, newRanking.departmentId)) {
-		storingMissedTurn['firstRoom'] = newMissedTurn || [];
+		if (newMissedTurn) {
+			storingMissedTurn['firstRoom'] = newMissedTurn;
+		} else {
+			storingMissedTurn['firstRoom'] = [];
+		}
 	} else {
-		storingMissedTurn['secondRoom'] = newMissedTurn || [];
+		if (newMissedTurn) {
+			storingMissedTurn['secondRoom'] = newMissedTurn;
+		} else {
+			storingMissedTurn['secondRoom'] = [];
+		}
 	}
 	state['missedTurn'] = storingMissedTurn;
 }

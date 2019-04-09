@@ -21,8 +21,15 @@ function unhideElement(targetId) {
 
 function isElementHidden(targetId) {
 	var element = document.getElementById(targetId);
-
-	return element.getAttribute('class').includes('hide');
+	var classes = element.getAttribute('class');
+	var result = false;
+	
+	for (var i = 0; i < classes.length; i++) {
+		if (classes[i] === 'hide') {
+			return true;
+		}
+	}
+	return result;
 }
 
 function getUrlParameter(name) {
