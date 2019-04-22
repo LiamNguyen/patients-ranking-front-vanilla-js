@@ -62,7 +62,7 @@ function fetchRankData() {
 
 					setInTreatmentData(newRanking);
 					setWaitingListData(newRanking);
-					updateUI(room, departmentId);
+					updateUI(departmentId);
 				}
 			}
 		}
@@ -107,7 +107,7 @@ function buildQueryParams() {
 	}
 }
 
-function updateUI(room, departmentId) {
+function updateUI(departmentId) {
 	var idPrefix;
 	var inTreatmentKey;
 
@@ -129,7 +129,6 @@ function updateInTreatment(idPrefix, inTreatmentKey) {
 	var newRoomNameEl = document.getElementById(idPrefix + 'new-room-name');
 	var patientNameEl = document.getElementById(idPrefix + 'patient-name');
 	var patientNumberEl = document.getElementById(idPrefix + 'patient-number');
-	var newRankEl = document.getElementById(idPrefix + 'new-rank');
 
 	roomNameEl.innerText = inTreatment.roomName;
 	patientNameEl.innerText = inTreatment.patient;
@@ -162,16 +161,16 @@ function updateWaitingList() {
 	var rightWaitingListSubSectionEl = document.getElementById('right-waiting-list-sub-section');
 	var firstRoomWaitingList = state.waitingList.firstRoom;
 	var secondRoomWaitingList = state.waitingList.secondRoom;
-	var listToDisplay = _.isEmpty(state.room)
-		? []
-		: isDataForFirstRoom(state.query, state.departmentId)
-			? getDisplayWaitingList(firstRoomWaitingList, secondRoomWaitingList)
-			: getDisplayWaitingList(secondRoomWaitingList, firstRoomWaitingList);
-	var firstSubList = _.chunk(listToDisplay, 3)[0];
-	var secondSubList = _.chunk(listToDisplay, 3)[1];
+	// var listToDisplay = _.isEmpty(state.room)
+	// 	? []
+	// 	: isDataForFirstRoom(state.query, state.departmentId)
+	// 		? getDisplayWaitingList(firstRoomWaitingList, secondRoomWaitingList)
+	// 		: getDisplayWaitingList(secondRoomWaitingList, firstRoomWaitingList);
+	// var firstSubList = _.chunk(listToDisplay, 3)[0];
+	// var secondSubList = _.chunk(listToDisplay, 3)[1];
 
-	if (!_.isEmpty(firstSubList)) {
-		firstSubList.forEach(function (item) {
+	if (!_.isEmpty(firstRoomWaitingList)) {
+		firstRoomWaitingList.forEach(function (item) {
 			var listItemEl = document.createElement('p');
 			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);
 
@@ -179,8 +178,8 @@ function updateWaitingList() {
 			leftWaitingListSubSectionEl.appendChild(listItemEl);
 		});
 	}
-	if (!_.isEmpty(secondSubList)) {
-		secondSubList.forEach(function (item) {
+	if (!_.isEmpty(secondRoomWaitingList)) {
+		secondRoomWaitingList.forEach(function (item) {
 			var listItemEl = document.createElement('p');
 			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);
 
@@ -213,7 +212,7 @@ function updateMissedTurnList() {
 function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room, isSecondRoom) {
 	if (!_.isEmpty(missedTurnList) && room) {
 		var roomNameSpan = document.createElement('span');
-
+		
 		if (isSecondRoom) {
 			missedTurnedEl.appendChild(document.createTextNode(' --- '));
 			roomNameSpan.classList.add('second-room');
