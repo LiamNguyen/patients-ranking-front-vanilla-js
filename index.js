@@ -1,6 +1,5 @@
 var MAX_WAITING_PATIENTS = 6;
-var footerTitleMissedTurn = 'KHÁCH HÀNG GỌI NHỠ';
-var call = 'gọi số';
+var footerTitleMissedTurn = 'GỌI NHỠ:';
 var fetchRankDataIntervalInSeconds = 10000;
 var fetchMissedTurnIntervalInSeconds = 30000;
 var state = {
@@ -152,12 +151,6 @@ function updateInTreatment(idPrefix, inTreatmentKey) {
 		if (!isElementHidden(idPrefix + 'new-room-name')) {
 			hideElement(idPrefix + 'new-room-name');
 		}
-		if (!isElementHidden(idPrefix + 'change-rank-icon')) {
-			hideElement(idPrefix + 'change-rank-icon');
-		}
-		if (!isElementHidden(idPrefix + 'new-rank')) {
-			hideElement(idPrefix + 'new-rank');
-		}
 	}
 }
 
@@ -208,34 +201,43 @@ function updateMissedTurnList() {
 	var footerTitleEl = document.getElementById('footer-title');
 	var firstMissedTurnEl = document.getElementById('first-missed-turn');
 	var secondMissedTurnEl = document.getElementById('second-missed-turn');
+	var isSecondRoom = true;
 
 	if (!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)) {
 		footerTitleEl.innerText = footerTitleMissedTurn;
 	}
-	createMissedTurnChildElements(firstMissedTurnEl, firstMissedTurnRoom, firstRoom);
-	createMissedTurnChildElements(secondMissedTurnEl, secondMissedTurnRoom, secondRoom);
+	createMissedTurnChildElements(firstMissedTurnEl, firstMissedTurnRoom, firstRoom, !isSecondRoom);
+	createMissedTurnChildElements(secondMissedTurnEl, secondMissedTurnRoom, secondRoom, isSecondRoom);
 }
 
-function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room) {
+function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room, isSecondRoom) {
 	if (!_.isEmpty(missedTurnList) && room) {
-		missedTurnList.forEach(function (item) {
-			var roomNameSpan = document.createElement('span');
-			var patientNumberSpan = document.createElement('span');
-			// var patientNameSpan = document.createElement('span');
+		var roomNameSpan = document.createElement('span');
 
-			missedTurnedEl.appendChild(document.createTextNode('  -  '));
-			roomNameSpan.classList.add('room-name-in-footer');
-			roomNameSpan.innerText = room.roomName;
-			missedTurnedEl.appendChild(roomNameSpan);
-			missedTurnedEl.appendChild(document.createTextNode(' ' + call + ' '));
+		if (isSecondRoom) {
+			missedTurnedEl.appendChild(document.createTextNode(' --- '));
+			roomNameSpan.classList.add('second-room');
+		}
+		roomNameSpan.classList.add('room-name-in-footer');
+		roomNameSpan.innerText = room.roomName;
+		missedTurnedEl.appendChild(roomNameSpan);
+		missedTurnedEl.appendChild(document.createTextNode(' - '));
+
+		for(var i = 0; i < missedTurnList.length; i++) {
+			var item = missedTurnList[i];
+			var patientNumberSpan = document.createElement('span');
+
+			if (isSecondRoom) {
+				patientNumberSpan.classList.add('second-room');
+			}
 			patientNumberSpan.classList.add('patient-number-in-footer');
 			patientNumberSpan.innerText = item.rank;
 			missedTurnedEl.appendChild(patientNumberSpan);
-			// missedTurnedEl.appendChild(document.createTextNode('. '));
-			// patientNameSpan.classList.add('patient-name-in-footer');
-			// patientNameSpan.innerText = item.patient;
-			// missedTurnedEl.appendChild(patientNameSpan);
-		});
+			
+			if (i < missedTurnList.length - 1) {
+				missedTurnedEl.appendChild(document.createTextNode(', '));
+			}
+		}
 	}
 }
 

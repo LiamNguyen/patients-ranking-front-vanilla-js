@@ -81,42 +81,6 @@ body {
 	padding: 0;
 }
 
-.screen-container {
-	height: 100%;
-	width: 100%;
-}
-
-.screen-content {
-	overflow-y: auto;
-}
-
-/* Overriding alert box style from react-s-alert  */
-.s-alert-wrapper .s-alert-box {
-	position: absolute !important;
-	z-index: 1500;
-}
-
-/*Overriding react-tabs-redux*/
-.app .tab-link {
-	display: inline-block;
-	font-size: 18px;
-	user-select: none;
-	padding: 10px;
-	text-align: center;
-	outline: none;
-	cursor: pointer;
-	transition: 1s ease;
-}
-
-.tab-link.tab-link-active {
-	color: #b777ae;
-}
-
-.tab-panel {
-	margin-top: 20px;
-}
-
-
 .ranking-screen {
 	background-color: #1B4889;
 	height: 100%;
@@ -327,15 +291,19 @@ hr {
 }
 
 .footer .room-name-in-footer {
-	color: #ff1e82;
+	color: yellow;
 }
 
 .footer .patient-number-in-footer {
 	color: yellow;
 }
 
-.footer .patient-name-in-footer {
-	color: yellow;
+.footer .room-name-in-footer.second-room {
+	color: #ff1e82;
+}
+
+.footer .patient-number-in-footer.second-room {
+	color: #ff1e82;
 }
 
 .footer .footer-item {
