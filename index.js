@@ -15,6 +15,10 @@ var state = {
 	waitingList: { firstRoom: [], secondRoom: [] }
 };
 
+function bodyOnClick() {
+	$('body').fullscreen();
+}
+
 setInterval(function () {
 	document.getElementsByClassName('current-time')[0].innerHTML = moment().format('HH:mm:ss');
 }, 1000);
@@ -138,12 +142,9 @@ function updateInTreatment(idPrefix, inTreatmentKey) {
 		inTreatment.oldRank !== '')) {
 		unhideElement(idPrefix + 'change-room-icon');
 		unhideElement(idPrefix + 'new-room-name');
-		unhideElement(idPrefix + 'change-rank-icon');
-		unhideElement(idPrefix + 'new-rank');
 		newRoomNameEl.innerText = inTreatment.roomName;
 		roomNameEl.innerText = inTreatment.oldRoom;
-		patientNumberEl.innerText = inTreatment.oldRank;
-		newRankEl.innerText = inTreatment.rank;
+		patientNumberEl.innerText = inTreatment.rank;
 	} else {
 		if (!isElementHidden(idPrefix + 'change-room-icon')) {
 			hideElement(idPrefix + 'change-room-icon');
@@ -164,7 +165,6 @@ function updateWaitingList() {
 	removeAllChildNodes('left-waiting-list-sub-section');
 	removeAllChildNodes('right-waiting-list-sub-section');
 
-	var leftWaitingListEl = document.getElementById('left-waiting-list');
 	var leftWaitingListSubSectionEl = document.getElementById('left-waiting-list-sub-section');
 	var rightWaitingListSubSectionEl = document.getElementById('right-waiting-list-sub-section');
 	var firstRoomWaitingList = state.waitingList.firstRoom;
@@ -178,11 +178,6 @@ function updateWaitingList() {
 	var secondSubList = _.chunk(listToDisplay, 3)[1];
 
 	if (!_.isEmpty(firstSubList)) {
-		if (listToDisplay.length <= 3) {
-			leftWaitingListEl.classList.add('align-center');
-		} else {
-			leftWaitingListEl.classList.remove('align-center');
-		}
 		firstSubList.forEach(function (item) {
 			var listItemEl = document.createElement('p');
 			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);

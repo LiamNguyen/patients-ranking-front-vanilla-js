@@ -63,6 +63,7 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
+	font-family: "Times New Roman";
 }
 
 #root {
@@ -132,19 +133,19 @@ hr {
 .header-title {
 	position: relative;
 	text-align: center;
-	justify-content: space-between;
-	align-items: center;
 	color: white;
 }
 
 .nancy-logo {
-	position: absolute;
+	position: fixed;
+	top: 15px;
 	left: 0;
 	width: 230px;
 }
 
 .htgsoft-logo {
-	position: absolute;
+	position: fixed;
+	top: 15px;
 	right: 0;
 	width: 230px;
 }
@@ -158,6 +159,11 @@ hr {
 	font-weight: bold;
 }
 
+.title-container {
+	display: inline-block;
+	margin-top: 10px;
+}
+
 .current-time {
 	text-align: center;
 	color: #ff1e82;
@@ -167,14 +173,18 @@ hr {
 
 .panel-container {
 	width: 100%;
-	height: 77%;
+	height: 75%;
 }
 
 .patients-name-and-rank {
-	position: relative;
 	padding-top: 20px;
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	position: relative;
 	text-align: center;
-	height: 60%;
+	justify-content: center;
+	align-items: center;
 }
 
 .patients-name-and-rank .section {
@@ -182,56 +192,40 @@ hr {
 }
 
 .patients-name-and-rank .section .sub-section {
-	display: inline-block;
-	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .patients-name-and-rank .section.left {
-	float: left;
+	display: inline-flex;
+	display: -ms-inline-flexbox;
+	display: -webkit-inline-flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .patients-name-and-rank .section.left.one-room-layout {
-	float: unset;
+	float: none;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .patients-name-and-rank .section.right {
-	float: right;
+	display: inline-flex;
+	display: -ms-inline-flexbox;
+	display: -webkit-inline-flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .patients-name-and-rank .section .sub-section.left {
 	width: 69%;
-	border-right: solid 1px white;
 }
 
 .patients-name-and-rank .section .sub-section.right {
 	width: 29%;
-}
-
-.panel-sub-container {
-	display: inline-block;
-	width: 49%;
-	height: 100%;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.right-panel-sub-container {
-	border-left: solid 1px white;
-}
-
-.panel-sub-container.one-room-layout {
-	margin: 0;
-	flex: 0.6;
-}
-
-.panel-sub-container hr {
-	width: 430px;
-	height: 1px;
-	color: lightgray;
-	background-color: lightgray;
-	border: none;
 }
 
 .number {
@@ -244,7 +238,7 @@ hr {
 
 .patient-number {
 	margin: 40px 0 0 0;
-	color: #faff47;
+	color: yellow;
 	font-size: 70px;
 	font-weight: bold;
 }
@@ -254,22 +248,25 @@ hr {
 }
 
 .room-name {
+	margin-top: 0;
+	margin-bottom: 10px;
 	font-size: 40px;
-	color: #ff1e82;
+	color: yellow;
 	font-weight: bold;
 	text-align: center;
-	margin-bottom: 10px;
 }
 
 .welcoming {
+	margin: 10px auto 0 auto;
 	font-size: 35px;
 	color: white;
 	text-align: center;
 }
 
 .patient-name {
+	margin-top: 20px;
 	font-size: 45px;
-	color: #faff47;
+	color: yellow;
 	font-weight: bold;
 	text-align: center;
 }
@@ -304,7 +301,7 @@ hr {
 
 .waiting-list .section.left.align-center .sub-section {
 	text-align: center;
-	float: unset;
+	float: none;
 	margin: unset;
 	display: block;
 }
@@ -334,22 +331,26 @@ hr {
 }
 
 .footer .patient-number-in-footer {
-	color: #faff47;
+	color: yellow;
 }
 
 .footer .patient-name-in-footer {
-	color: #faff47;
+	color: yellow;
 }
 
 .footer .footer-item {
 	display: inline;
 }
 
+.footer hr {
+	margin-bottom: 25px;
+}
+
 .vertical-separator {
 	display: inline-block;
 	background-color: white;
 	width: 1px;
-	height: 100%;
+	height: 200px;
 }
 
 .vertical-separator.half-height {
