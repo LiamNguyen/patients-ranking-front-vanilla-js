@@ -50,12 +50,12 @@ function fetchRankData() {
 	http.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
 			var response = JSON.parse(http.responseText);
-			
+
 			for(var i = 0; i < response.length; i++) {
 				var newRanking = response[i];
 				var room = newRanking.room;
 				var departmentId = newRanking.departmentId;
-				
+
 				if (state.query.firstRoom === departmentId || state.query.secondRoom === departmentId) {
 					state['room'] = removeSpaceFromString(room);
 					state['departmentId'] = departmentId;
@@ -78,7 +78,7 @@ function fetchMissedTurn() {
 	http.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
 			var response = JSON.parse(http.responseText);
-			
+
 			for(var i = 0; i < response.length; i++) {
 				var newRanking = response[i];
 				var room = newRanking.room;
@@ -118,7 +118,7 @@ function updateUI(departmentId) {
 		idPrefix = 'second-';
 		inTreatmentKey = 'secondRoom';
 	}
-	
+
 	updateInTreatment(idPrefix, inTreatmentKey);
 	updateWaitingList();
 }
@@ -144,12 +144,8 @@ function updateInTreatment(idPrefix, inTreatmentKey) {
 		roomNameEl.innerText = inTreatment.oldRoom;
 		patientNumberEl.innerText = inTreatment.rank;
 	} else {
-		if (!isElementHidden(idPrefix + 'change-room-icon')) {
-			hideElement(idPrefix + 'change-room-icon');
-		}
-		if (!isElementHidden(idPrefix + 'new-room-name')) {
-			hideElement(idPrefix + 'new-room-name');
-		}
+		hideElement(idPrefix + 'change-room-icon');
+		hideElement(idPrefix + 'new-room-name');
 	}
 }
 
@@ -168,6 +164,16 @@ function updateWaitingList() {
 	// 		: getDisplayWaitingList(secondRoomWaitingList, firstRoomWaitingList);
 	// var firstSubList = _.chunk(listToDisplay, 3)[0];
 	// var secondSubList = _.chunk(listToDisplay, 3)[1];
+
+	if (isDataForFirstRoom(state.query, state.departmentId)) {
+		hideElement('right-line-break');
+		hideElement('waiting-list-sections-separator');
+		hideElement('right-waiting-list');
+	} else {
+		unhideElement('right-line-break');
+		unhideElement('waiting-list-sections-separator');
+		unhideElement('right-waiting-list');
+	}
 
 	if (!_.isEmpty(firstRoomWaitingList)) {
 		firstRoomWaitingList.forEach(function (item) {
@@ -212,7 +218,7 @@ function updateMissedTurnList() {
 function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room, isSecondRoom) {
 	if (!_.isEmpty(missedTurnList) && room) {
 		var roomNameSpan = document.createElement('span');
-		
+
 		if (isSecondRoom) {
 			missedTurnedEl.appendChild(document.createTextNode(' --- '));
 			roomNameSpan.classList.add('second-room');
@@ -232,7 +238,7 @@ function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room, isS
 			patientNumberSpan.classList.add('patient-number-in-footer');
 			patientNumberSpan.innerText = item.rank;
 			missedTurnedEl.appendChild(patientNumberSpan);
-			
+
 			if (i < missedTurnList.length - 1) {
 				missedTurnedEl.appendChild(document.createTextNode(', '));
 			}

@@ -4,6 +4,8 @@ function removeSpaceFromString(string) {
 }
 
 function hideElement(targetId) {
+	if (isElementHidden(targetId)) return;
+
 	var element = document.getElementById(targetId);
 	var currentClasses = element.getAttribute('class');
 
@@ -12,6 +14,8 @@ function hideElement(targetId) {
 }
 
 function unhideElement(targetId) {
+	if (!isElementHidden(targetId)) return;
+
 	var element = document.getElementById(targetId);
 	var currentClasses = element.getAttribute('class');
 
@@ -22,10 +26,14 @@ function unhideElement(targetId) {
 function isElementHidden(targetId) {
 	var element = document.getElementById(targetId);
 	var classes = element.getAttribute('class');
+
+	if (!classes) return;
+
+	var classesArray = classes.split(' ');
 	var result = false;
-	
-	for (var i = 0; i < classes.length; i++) {
-		if (classes[i] === 'hide') {
+
+	for (var i = 0; i < classesArray.length; i++) {
+		if (classesArray[i] === 'hide') {
 			return true;
 		}
 	}
@@ -45,17 +53,5 @@ function removeAllChildNodes(parentId) {
 	if (!parentNode) return;
 	while (parentNode.firstChild) {
 		parentNode.removeChild(parentNode.firstChild);
-	}
-}
-
-function openFullscreen(element) {
-	if (element.requestFullscreen) {
-		element.requestFullscreen();
-	} else if (element.mozRequestFullScreen) { /* Firefox */
-		element.mozRequestFullScreen();
-	} else if (element.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-		element.webkitRequestFullscreen();
-	} else if (element.msRequestFullscreen) { /* IE/Edge */
-		element.msRequestFullscreen();
 	}
 }
