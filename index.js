@@ -1,7 +1,7 @@
 var MAX_WAITING_PATIENTS = 6;
-var footerTitleMissedTurn = 'GỌI NHỠ:';
+var footerTitleMissedTurn = 'GỌI NHỠ ';
 var fetchRankDataIntervalInSeconds = 10000;
-var fetchMissedTurnIntervalInSeconds = 30000;
+var fetchMissedTurnIntervalInSeconds = 10000;
 var state = {
 	query: {
 		firstRoom: getUrlParameter('dept_id1'),
@@ -23,15 +23,10 @@ setInterval(function () {
 }, 1000);
 
 fetchRankData();
-fetchMissedTurn();
 
 setInterval(function () {
 	fetchRankData();
 }, fetchRankDataIntervalInSeconds);
-
-setInterval(function () {
-	fetchMissedTurn();
-}, fetchMissedTurnIntervalInSeconds);
 
 if (!state.query.secondRoom) {
 	hideElement('patients-name-and-rank-section-right');
@@ -63,6 +58,7 @@ function fetchRankData() {
 					setInTreatmentData(newRanking);
 					setWaitingListData(newRanking);
 					updateUI(departmentId);
+					fetchMissedTurn();
 				}
 			}
 		}
@@ -165,7 +161,7 @@ function updateWaitingList() {
 	// var firstSubList = _.chunk(listToDisplay, 3)[0];
 	// var secondSubList = _.chunk(listToDisplay, 3)[1];
 
-	if (isDataForFirstRoom(state.query, state.departmentId)) {
+	if (isOneRoomLayout(state.query.secondRoom)) {
 		hideElement('right-line-break');
 		hideElement('waiting-list-sections-separator');
 		hideElement('right-waiting-list');
@@ -196,6 +192,14 @@ function updateWaitingList() {
 }
 
 function updateMissedTurnList() {
+	if (isOneRoomLayout(state.query.secondRoom)) {
+		hideElement('footer-right-line-break');
+		hideElement('second-missed-turn');
+	} else {
+		unhideElement('footer-right-line-break');
+		unhideElement('second-missed-turn');
+	}
+
 	removeAllChildNodes('first-missed-turn');
 	removeAllChildNodes('second-missed-turn');
 
@@ -203,14 +207,10 @@ function updateMissedTurnList() {
 	var secondRoom = state.inTreatment.secondRoom;
 	var firstMissedTurnRoom = state.missedTurn.firstRoom;
 	var secondMissedTurnRoom = state.missedTurn.secondRoom;
-	var footerTitleEl = document.getElementById('footer-title');
 	var firstMissedTurnEl = document.getElementById('first-missed-turn');
 	var secondMissedTurnEl = document.getElementById('second-missed-turn');
 	var isSecondRoom = true;
 
-	if (!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)) {
-		footerTitleEl.innerText = footerTitleMissedTurn;
-	}
 	createMissedTurnChildElements(firstMissedTurnEl, firstMissedTurnRoom, firstRoom, !isSecondRoom);
 	createMissedTurnChildElements(secondMissedTurnEl, secondMissedTurnRoom, secondRoom, isSecondRoom);
 }
@@ -219,14 +219,9 @@ function createMissedTurnChildElements(missedTurnedEl, missedTurnList, room, isS
 	if (!_.isEmpty(missedTurnList) && room) {
 		var roomNameSpan = document.createElement('span');
 
-		if (isSecondRoom) {
-			missedTurnedEl.appendChild(document.createTextNode(' --- '));
-			roomNameSpan.classList.add('second-room');
-		}
 		roomNameSpan.classList.add('room-name-in-footer');
-		roomNameSpan.innerText = room.roomName;
+		roomNameSpan.innerText = footerTitleMissedTurn + ' ' + room.roomName + ': ';
 		missedTurnedEl.appendChild(roomNameSpan);
-		missedTurnedEl.appendChild(document.createTextNode(' - '));
 
 		for(var i = 0; i < missedTurnList.length; i++) {
 			var item = missedTurnList[i];
@@ -251,7 +246,7 @@ function isDataForFirstRoom(query, departmentId) {
 }
 
 function isOneRoomLayout(secondRoomFromQuery) {
-	return typeof secondRoomFromQuery === 'undefined';
+	return typeof secondRoomFromQuery === 'undefined' || secondRoomFromQuery === '';
 }
 
 function setMissedTurnData(newRanking) {

@@ -245,7 +245,7 @@ hr {
 	align-items: center;
 	font-size: 40px;
 	color: white;
-	height: 25%;
+	height: 60%;
 }
 
 .waiting-list .section {
@@ -272,28 +272,30 @@ hr {
 	overflow: hidden;
 }
 
+.footer .missed-turns {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
 .footer .marquee div {
 	display: inline;
 }
 
 .footer .room-name-in-footer {
-	color: yellow;
+	color: white;
 }
 
 .footer .patient-number-in-footer {
 	color: yellow;
 }
 
-.footer .room-name-in-footer.second-room {
-	color: #ff1e82;
-}
-
-.footer .patient-number-in-footer.second-room {
-	color: #ff1e82;
-}
-
 .footer .footer-item {
-	display: inline;
+	margin-left: 30px;
+	flex: 0.5;
 }
 
 .footer hr {
@@ -309,6 +311,10 @@ hr {
 
 .vertical-separator.half-height {
 	height: 50%;
+}
+
+#waiting-list-sections-separator {
+	height: 100%;
 }
 
 .hide {
