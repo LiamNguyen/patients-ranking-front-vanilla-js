@@ -104,7 +104,7 @@ hr {
 	position: fixed;
 	top: 15px;
 	left: 0;
-	width: 230px;
+	width: 280px;
 }
 
 .htgsoft-logo {
@@ -215,7 +215,7 @@ hr {
 	margin-top: 0;
 	margin-bottom: 10px;
 	font-size: 40px;
-	color: yellow;
+	color: red;
 	font-weight: bold;
 	text-align: center;
 }
@@ -255,10 +255,11 @@ hr {
 
 .waiting-list .section .sub-section {
 	/*margin-left: 200px;*/
+	margin-left: 80px;
 }
 
 .waiting-list .section .sub-section p {
-	text-align: center;
+	text-align: left;
 }
 
 .footer {
