@@ -170,25 +170,30 @@ function updateWaitingList() {
 		unhideElement('waiting-list-sections-separator');
 		unhideElement('right-waiting-list');
 	}
-
 	if (!_.isEmpty(firstRoomWaitingList)) {
 		firstRoomWaitingList.forEach(function (item) {
-			var listItemEl = document.createElement('p');
-			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);
-
-			listItemEl.appendChild(listItemTextEl);
+			var listItemEl = renderWaitingListItem(item);
 			leftWaitingListSubSectionEl.appendChild(listItemEl);
 		});
 	}
 	if (!_.isEmpty(secondRoomWaitingList)) {
 		secondRoomWaitingList.forEach(function (item) {
-			var listItemEl = document.createElement('p');
-			var listItemTextEl = document.createTextNode(item.rank + '. ' + item.patient);
-
-			listItemEl.appendChild(listItemTextEl);
+			var listItemEl = renderWaitingListItem(item);
 			rightWaitingListSubSectionEl.appendChild(listItemEl);
 		});
 	}
+}
+
+function renderWaitingListItem(item) {
+	var listItemEl = document.createElement('p');
+	var listItemTextEl = document.createTextNode(item.rank + '. ');
+	var patientNameEl = document.createElement('b');
+
+	patientNameEl.innerHTML = item.patient;
+	listItemEl.appendChild(listItemTextEl);
+	listItemEl.appendChild(patientNameEl);
+
+	return listItemEl;
 }
 
 function updateMissedTurnList() {
