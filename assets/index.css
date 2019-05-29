@@ -193,11 +193,11 @@ hr {
 }
 
 .number {
+	margin: 0;
 	color: white;
 	font-size: 50px;
 	text-align: center;
 	font-weight: bold;
-	margin-bottom: 0;
 }
 
 .patient-number {
@@ -228,7 +228,7 @@ hr {
 }
 
 .patient-name {
-	margin-top: 20px;
+	margin: 20px auto 20px auto;
 	font-size: 56px;
 	color: yellow;
 	font-weight: bold;
@@ -295,6 +295,7 @@ hr {
 }
 
 .footer .footer-item {
+	text-align: start;
 	margin-left: 30px;
 	flex: 0.5;
 }
