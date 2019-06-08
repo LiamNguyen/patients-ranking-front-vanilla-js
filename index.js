@@ -1,4 +1,4 @@
-var MAX_WAITING_PATIENTS = 6;
+var MAX_WAITING_PATIENTS = 4;
 var footerTitleMissedTurn = 'GỌI NHỠ ';
 var roomConstant = 'phòng khám';
 var shortenedRoomConstant = 'pk';
@@ -293,7 +293,7 @@ function setInTreatmentData(newRanking) {
 
 function setWaitingListData(newRanking) {
 	var newWaitingList = newRanking.waitingList;
-	var sortedNewWaitingList = _.sortBy(newWaitingList, 'rank');
+	var sortedNewWaitingList = _.sortBy(newWaitingList, 'rank').slice(0, MAX_WAITING_PATIENTS);
 	var storingWaitingList = Object.assign({}, state.waitingList);
 
 	if (isDataForFirstRoom(state.query, newRanking.departmentId)) {
