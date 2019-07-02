@@ -1,7 +1,7 @@
 var MAX_WAITING_PATIENTS = 4;
 var footerTitleMissedTurn = 'GỌI NHỠ ';
-var roomConstant = 'phòng khám';
-var shortenedRoomConstant = 'pk';
+var roomConstant = 'Phòng khám';
+var shortenedRoomConstant = 'PK';
 var fetchRankDataIntervalInSeconds = 10000;
 var fetchMissedTurnIntervalInSeconds = 10000;
 var state = {
@@ -293,13 +293,13 @@ function setInTreatmentData(newRanking) {
 
 function setWaitingListData(newRanking) {
 	var newWaitingList = newRanking.waitingList;
-	var sortedNewWaitingList = _.sortBy(newWaitingList, 'rank').slice(0, MAX_WAITING_PATIENTS);
+	var slicedNewWaitingList = newWaitingList.slice(0, MAX_WAITING_PATIENTS);
 	var storingWaitingList = Object.assign({}, state.waitingList);
 
 	if (isDataForFirstRoom(state.query, newRanking.departmentId)) {
-		storingWaitingList['firstRoom'] = sortedNewWaitingList;
+		storingWaitingList['firstRoom'] = slicedNewWaitingList;
 	} else {
-		storingWaitingList['secondRoom'] = sortedNewWaitingList;
+		storingWaitingList['secondRoom'] = slicedNewWaitingList;
 	}
 	state['waitingList'] = storingWaitingList;
 }
